@@ -3,7 +3,7 @@ const state = {
         squares: document.querySelectorAll(".squere"),
         enemy: document.querySelector(".enemy"),
         timeLeft: document.querySelector("#time-left"),
-        score: document.querySelector("#score"), 
+        score: document.querySelector("#score"),
     },
 
     values: {
@@ -13,9 +13,9 @@ const state = {
         curretTime: 60,
     },
 
-    actions:{
+    actions: {
         timerId: setInterval(randomSquare, 1000),
-        countDownTimerId: setInterval(countDown, 1000), 
+        countDownTimerId: setInterval(countDown, 1000),
     }
 };
 
@@ -28,40 +28,40 @@ function countDown() {
         clearInterval(state.actions.timerId);
         alert("Game Over! O seu resultado foi: " + state.values.result);
     }
-}
+};
 
-function playSound(audioName){
+function playSound(audioName) {
     let audio = new Audio(`./src/audios/${audioName}.m4a`);
     audio.volume = 0.2;
     audio.play();
-}
+};
 
 function randomSquare() {
     state.viem.squares.forEach((square) => {
-    square.classList.remove("enemy");
-});
+        square.classList.remove("enemy");
+    });
 
-    let randomNumber = Math.floor(Math.random() * 9); 
+    let randomNumber = Math.floor(Math.random() * 9);
     let randomSquare = state.viem.squares[randomNumber];
-    randomSquare.classList.add ("enemy");
+    randomSquare.classList.add("enemy");
     state.values.hitPosition = randomSquare.id;
 };
 
 function addListenerHitBox() {
     state.view.squares.forEach((square) => {
-    square.addEventListener("mousedown", () => {
-        if(square.id === state.values.hitPosition){
-           state.values.result++ 
-           square.values.score.textContent = state.values.result;
-           square.values.hitPosition = null;
-           audio.play("hit");
-        }
+        square.addEventListener("mousedown", () => {
+            if (square.id === state.values.hitPosition) {
+                state.values.result++
+                square.values.score.textContent = state.values.result;
+                square.values.hitPosition = null;
+                audio.play("hit");
+            }
+        });
     });
-});
-}
+};
 
 function initialize() {
     addListenerHitBox();
-}
+};
 
 initialize();
